@@ -51,7 +51,7 @@ class _EarningsScreenState extends State<EarningsScreen>
             children: [
 
               Text(
-                "€ " + sellerTotalEarnings.toString(),
+                "৳ " + sellerTotalEarnings.toString(),
                 style: const TextStyle(
                   fontSize: 80,
                   color: Colors.white,
@@ -99,7 +99,7 @@ class _EarningsScreenState extends State<EarningsScreen>
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 16,
+                        fontSize: 10,
                       ),
                     ),
                   ),

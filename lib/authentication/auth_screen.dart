@@ -33,9 +33,9 @@ class _AuthScreenState extends State<AuthScreen> {
           ),
           automaticallyImplyLeading: false,
           title: const Text(
-              "iFood",
+              "AgriVillage",
             style: TextStyle(
-              fontSize: 60,
+              fontSize: 30,
               color: Colors.white,
               fontFamily: "Lobster",
             ),

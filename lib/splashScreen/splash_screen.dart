@@ -54,7 +54,7 @@ class _MySplashScreenState extends State<MySplashScreen>
 
               Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: Image.asset("images/splash.jpg"),
+                child: Image.asset("images/splash.png"),
               ),
 
               const SizedBox(height: 10,),
@@ -62,7 +62,7 @@ class _MySplashScreenState extends State<MySplashScreen>
               const Padding(
                 padding: EdgeInsets.all(18.0),
                 child: Text(
-                  "Sell Food Online",
+                  "Serve Your Products to the nation",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.black54,

@@ -321,7 +321,7 @@ class _ItemsUploadScreenState extends State<ItemsUploadScreen>
                 style: const TextStyle(color: Colors.black),
                 controller: priceController,
                 decoration: const InputDecoration(
-                  hintText: "harga",
+                  hintText: "Taka",
                   hintStyle: TextStyle(color: Colors.grey),
                   border: InputBorder.none,
                 ),

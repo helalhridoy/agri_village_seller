@@ -75,7 +75,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              widget.model!.price.toString() + " €",
+              widget.model!.price.toString() + " ৳",
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
             ),
           ),
