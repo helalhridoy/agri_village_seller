@@ -2,18 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:foodpanda_sellers_app/authentication/auth_screen.dart';
 import 'package:foodpanda_sellers_app/global/global.dart';
 import 'package:foodpanda_sellers_app/mainScreens/earnings_screen.dart';
+import 'package:foodpanda_sellers_app/mainScreens/farm_profile.dart';
 import 'package:foodpanda_sellers_app/mainScreens/history_screen.dart';
 import 'package:foodpanda_sellers_app/mainScreens/home_screen.dart';
 import 'package:foodpanda_sellers_app/mainScreens/new_orders_screen.dart';
 
-
-
-class MyDrawer extends StatelessWidget
-{
-
+class MyDrawer extends StatelessWidget {
   @override
-  Widget build(BuildContext context)
-  {
+  Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
         children: [
@@ -32,22 +28,26 @@ class MyDrawer extends StatelessWidget
                       width: 160,
                       child: CircleAvatar(
                         backgroundImage: NetworkImage(
-                          sharedPreferences!.getString("photoUrl")!
-                        ),
+                            sharedPreferences!.getString("photoUrl")!),
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 10,),
+                const SizedBox(
+                  height: 10,
+                ),
                 Text(
-                    sharedPreferences!.getString("name")!,
-                  style: TextStyle(color: Colors.black, fontSize: 20, fontFamily: "Train"),
+                  sharedPreferences!.getString("name")!,
+                  style: TextStyle(
+                      color: Colors.black, fontSize: 20, fontFamily: "Train"),
                 ),
               ],
             ),
           ),
 
-          const SizedBox(height: 12,),
+          const SizedBox(
+            height: 12,
+          ),
 
           //body drawer
           Container(
@@ -60,14 +60,17 @@ class MyDrawer extends StatelessWidget
                   thickness: 2,
                 ),
                 ListTile(
-                  leading: const Icon(Icons.home, color: Colors.black,),
+                  leading: const Icon(
+                    Icons.home,
+                    color: Colors.black,
+                  ),
                   title: const Text(
                     "Home",
                     style: TextStyle(color: Colors.black),
                   ),
-                  onTap: ()
-                  {
-                    Navigator.push(context, MaterialPageRoute(builder: (c)=> const HomeScreen()));
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (c) => const HomeScreen()));
                   },
                 ),
                 const Divider(
@@ -76,14 +79,19 @@ class MyDrawer extends StatelessWidget
                   thickness: 2,
                 ),
                 ListTile(
-                  leading: const Icon(Icons.monetization_on, color: Colors.black,),
+                  leading: const Icon(
+                    Icons.monetization_on,
+                    color: Colors.black,
+                  ),
                   title: const Text(
                     "My Earnings",
                     style: TextStyle(color: Colors.black),
                   ),
-                  onTap: ()
-                  {
-                    Navigator.push(context, MaterialPageRoute(builder: (c)=> const EarningsScreen()));
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (c) => const EarningsScreen()));
                   },
                 ),
                 const Divider(
@@ -92,14 +100,17 @@ class MyDrawer extends StatelessWidget
                   thickness: 2,
                 ),
                 ListTile(
-                  leading: const Icon(Icons.reorder, color: Colors.black,),
+                  leading: const Icon(
+                    Icons.reorder,
+                    color: Colors.black,
+                  ),
                   title: const Text(
                     "New orders",
                     style: TextStyle(color: Colors.black),
                   ),
-                  onTap: ()
-                  {
-                    Navigator.push(context, MaterialPageRoute(builder: (c)=> NewOrdersScreen()));
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (c) => NewOrdersScreen()));
                   },
                 ),
                 const Divider(
@@ -108,14 +119,17 @@ class MyDrawer extends StatelessWidget
                   thickness: 2,
                 ),
                 ListTile(
-                  leading: const Icon(Icons.local_shipping, color: Colors.black,),
+                  leading: const Icon(
+                    Icons.local_shipping,
+                    color: Colors.black,
+                  ),
                   title: const Text(
                     "History - Orders",
                     style: TextStyle(color: Colors.black),
                   ),
-                  onTap: ()
-                  {
-                    Navigator.push(context, MaterialPageRoute(builder: (c)=>  HistoryScreen()));
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (c) => HistoryScreen()));
                   },
                 ),
                 const Divider(
@@ -124,15 +138,41 @@ class MyDrawer extends StatelessWidget
                   thickness: 2,
                 ),
                 ListTile(
-                  leading: const Icon(Icons.exit_to_app, color: Colors.black,),
+                  leading: const Icon(
+                    Icons.monetization_on,
+                    color: Colors.black,
+                  ),
+                  title: const Text(
+                    "My Farm Profile",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (c) => const farm_profile()));
+                  },
+                ),
+                const Divider(
+                  height: 10,
+                  color: Colors.grey,
+                  thickness: 2,
+                ),
+                ListTile(
+                  leading: const Icon(
+                    Icons.exit_to_app,
+                    color: Colors.black,
+                  ),
                   title: const Text(
                     "Sign Out",
                     style: TextStyle(color: Colors.black),
                   ),
-                  onTap: ()
-                  {
-                    firebaseAuth.signOut().then((value){
-                      Navigator.push(context, MaterialPageRoute(builder: (c)=> const AuthScreen()));
+                  onTap: () {
+                    firebaseAuth.signOut().then((value) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (c) => const AuthScreen()));
                     });
                   },
                 ),
