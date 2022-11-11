@@ -19,7 +19,8 @@ class update_farm_profile extends StatefulWidget {
 
 class _update_farm_profileState extends State<update_farm_profile> {
   final ImagePicker _picker = ImagePicker();
-  final List<XFile> _selectedFiles = [];
+  List<XFile> selectedImage = [];
+
   XFile? imageXFile;
   TextEditingController shortInfoController = TextEditingController();
   TextEditingController titleController = TextEditingController();
@@ -46,125 +47,257 @@ class _update_farm_profileState extends State<update_farm_profile> {
         actions: const [],
       ),
       body: Center(
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: TextFormField(
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
-                  decoration: const InputDecoration(
-                    labelText: 'Farm Name',
-                    hintText: 'Enter Farm Name',
-                    prefixIcon: Icon(Icons.drive_file_rename_outline),
-                    border: OutlineInputBorder(),
-                  )),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: TextFormField(
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-
-                    return null;
-                  },
-                  decoration: const InputDecoration(
-                    labelText: 'Farm Address',
-                    hintText: 'Enter Address',
-                    prefixIcon: Icon(Icons.home),
-                    border: OutlineInputBorder(),
-                  )),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: TextFormField(
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-                decoration: const InputDecoration(
-                  labelText: 'Features',
-                  hintText: 'Enter your Features',
-                  prefixIcon: Icon(Icons.lock_outline_rounded),
-                  border: OutlineInputBorder(),
-                ),
-                //minLines: 2,
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                    decoration: const InputDecoration(
+                      labelText: 'Farm Name',
+                      hintText: 'Enter Farm Name',
+                      prefixIcon: Icon(Icons.drive_file_rename_outline),
+                      border: OutlineInputBorder(),
+                    )),
               ),
-            ),
-            const Padding(
-              padding: EdgeInsets.all(10.0),
-              child: TextField(
-                  keyboardType: TextInputType.multiline,
-                  decoration: InputDecoration(
-                    labelText: 'Open Timing',
-                    hintText: 'Enter your timing',
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+
+                      return null;
+                    },
+                    decoration: const InputDecoration(
+                      labelText: 'Farm Address',
+                      hintText: 'Enter Address',
+                      prefixIcon: Icon(Icons.home),
+                      border: OutlineInputBorder(),
+                    )),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: TextFormField(
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
+                  decoration: const InputDecoration(
+                    labelText: 'Features',
+                    hintText: 'Enter your Features',
                     prefixIcon: Icon(Icons.lock_outline_rounded),
                     border: OutlineInputBorder(),
-                  )),
-            ),
-            OutlinedButton(
-              onPressed: () {
-                selectImage();
-              },
-              child: const Text('Select Image Files For Slider'),
-            ),
-            ElevatedButton.icon(
-              icon: const Icon(Icons.file_upload),
-              onPressed: () {},
-              label: const Text(
-                "Upload",
-                style: TextStyle(
-                  color: Colors.white,
+                  ),
+                  //minLines: 2,
                 ),
               ),
-            ),
-            _selectedFiles.isEmpty
-                ? const Padding(
-                    padding: EdgeInsets.only(top: 10.0),
-                    child: Text("No image Selected"),
-                  )
-                : Flexible(
-                    fit: FlexFit.tight,
-                    child: GridView.builder(
-                        shrinkWrap: true,
-                        itemCount: _selectedFiles.length,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                mainAxisSpacing: 0,
-                                crossAxisSpacing: 0,
-                                crossAxisCount: 3),
-                        itemBuilder: (BuildContext context, int index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Image.file(
-                              File(_selectedFiles[index].path),
-                              fit: BoxFit.cover,
-                            ),
-                          );
-                        }),
+              const Padding(
+                padding: EdgeInsets.all(10.0),
+                child: TextField(
+                    keyboardType: TextInputType.multiline,
+                    decoration: InputDecoration(
+                      labelText: 'Open Timing',
+                      hintText: 'Enter your timing',
+                      prefixIcon: Icon(Icons.lock_outline_rounded),
+                      border: OutlineInputBorder(),
+                    )),
+              ),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    flex: 1,
+                    child: OutlinedButton(
+                      onPressed: () {
+                        selectImage(1);
+                      },
+                      child: const Text('Select Image 1 Files For Slider'),
+                    ),
                   ),
-          ],
+                  Expanded(
+                    flex: 1,
+                    child: SizedBox(
+                      height: 100,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: selectedImage.length >= 2
+                            ? Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Image.file(
+                                  File(selectedImage[0].path),
+                                  fit: BoxFit.cover,
+                                ),
+                              )
+                            : const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text("No image"),
+                              ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    flex: 1,
+                    child: OutlinedButton(
+                      onPressed: () {
+                        selectImage(2);
+                      },
+                      child: const Text('Select Image Files For Slider'),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: SizedBox(
+                      height: 100,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: selectedImage.length >= 2
+                            ? Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Image.file(
+                                  File(selectedImage[1].path),
+                                  fit: BoxFit.cover,
+                                ),
+                              )
+                            : const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text("No image"),
+                              ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    flex: 1,
+                    child: OutlinedButton(
+                      onPressed: () {
+                        selectImage(3);
+                      },
+                      child: const Text('Select Image Files For Slider'),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: SizedBox(
+                      height: 100,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: selectedImage.length >= 3
+                            ? Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Image.file(
+                                  File(selectedImage[2].path),
+                                  fit: BoxFit.cover,
+                                ),
+                              )
+                            : const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text("No image"),
+                              ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    flex: 1,
+                    child: OutlinedButton(
+                      onPressed: () {
+                        selectImage(4);
+                      },
+                      child: const Text('Select Image Files For Slider'),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: SizedBox(
+                      height: 100,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: selectedImage.length >= 4
+                            ? Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Image.file(
+                                  File(selectedImage[3].path),
+                                  fit: BoxFit.cover,
+                                ),
+                              )
+                            : const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text("No image"),
+                              ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    flex: 1,
+                    child: OutlinedButton(
+                      onPressed: () {
+                        selectImage(5);
+                      },
+                      child: const Text('Select Image Files For Slider'),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: SizedBox(
+                      height: 100,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: selectedImage.length >= 5
+                            ? Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Image.file(
+                                  File(selectedImage[4].path),
+                                  fit: BoxFit.cover,
+                                ),
+                              )
+                            : const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text("No image"),
+                              ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Future<void> selectImage() async {
-    _selectedFiles.clear();
+  Future<void> selectImage(int i) async {
     try {
-      final List<XFile>? imgs = await _picker.pickMultiImage();
-      if (imgs!.isNotEmpty) {
-        _selectedFiles.addAll(imgs);
+      if (selectedImage.length >= i) {
+        XFile? img = await _picker.pickImage(source: ImageSource.gallery);
+        selectedImage[i - 1] = img!;
+      } else {
+        XFile? img = await _picker.pickImage(source: ImageSource.gallery);
+        selectedImage.add(img!);
       }
-      print("number of selected images: " + _selectedFiles.length.toString());
     } catch (e) {
       print("Something went wrong" + e.toString());
     }
