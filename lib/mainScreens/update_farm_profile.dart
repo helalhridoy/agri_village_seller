@@ -3,11 +3,14 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart' as storageRef;
 import 'package:flutter/material.dart';
+import 'package:foodpanda_sellers_app/mainScreens/farm_profile.dart';
 import 'package:foodpanda_sellers_app/model/farm.dart';
+import 'package:foodpanda_sellers_app/widgets/error_dialog.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../global/global.dart';
 import '../widgets/my_drawer.dart';
+import '../widgets/progress_bar.dart';
 
 class update_farm_profile extends StatefulWidget {
   const update_farm_profile({Key? key, this.model}) : super(key: key);
@@ -22,6 +25,14 @@ class _update_farm_profileState extends State<update_farm_profile> {
   List<XFile> selectedImage = [];
 
   XFile? imageXFile;
+  TextEditingController farmName = TextEditingController();
+  TextEditingController farmAddress = TextEditingController();
+  TextEditingController farmDetails = TextEditingController();
+  TextEditingController farmFeatures = TextEditingController();
+  TextEditingController farmTiming = TextEditingController();
+  TextEditingController farmRules = TextEditingController();
+  TextEditingController farmCharges = TextEditingController();
+
   TextEditingController shortInfoController = TextEditingController();
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
@@ -38,21 +49,50 @@ class _update_farm_profileState extends State<update_farm_profile> {
         flexibleSpace: Container(
           color: Colors.green,
         ),
-        title: Text(
-          sharedPreferences!.getString("name")!,
-          style: const TextStyle(fontSize: 30, fontFamily: "Lobster"),
+        title: const Text(
+          "Updating Farm Details",
+          style: TextStyle(fontSize: 20, fontFamily: "Lobster"),
         ),
         centerTitle: true,
         automaticallyImplyLeading: true,
-        actions: const [],
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            clearMenusUploadForm();
+            Navigator.push(context,
+                MaterialPageRoute(builder: (c) => const farm_profile()));
+          },
+        ),
+        actions: [
+          TextButton(
+            child: const Text(
+              "Add",
+              style: TextStyle(
+                color: Colors.cyan,
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+                fontFamily: "Varela",
+                letterSpacing: 3,
+              ),
+            ),
+            onPressed: () {
+              validateUploadForm();
+            },
+          ),
+        ],
       ),
       body: Center(
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
+              uploading == true ? linearProgress() : const Text(""),
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: TextFormField(
+                    controller: farmName,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter some text';
@@ -69,6 +109,7 @@ class _update_farm_profileState extends State<update_farm_profile> {
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: TextFormField(
+                    controller: farmAddress,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter some text';
@@ -86,6 +127,25 @@ class _update_farm_profileState extends State<update_farm_profile> {
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: TextFormField(
+                    controller: farmDetails,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+
+                      return null;
+                    },
+                    decoration: const InputDecoration(
+                      labelText: 'Farm Details',
+                      hintText: 'Enter Details',
+                      prefixIcon: Icon(Icons.home),
+                      border: OutlineInputBorder(),
+                    )),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: TextFormField(
+                  controller: farmFeatures,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter some text';
@@ -95,22 +155,68 @@ class _update_farm_profileState extends State<update_farm_profile> {
                   decoration: const InputDecoration(
                     labelText: 'Features',
                     hintText: 'Enter your Features',
-                    prefixIcon: Icon(Icons.lock_outline_rounded),
+                    prefixIcon: Icon(Icons.pan_tool_sharp),
                     border: OutlineInputBorder(),
                   ),
                   //minLines: 2,
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.all(10.0),
-                child: TextField(
-                    keyboardType: TextInputType.multiline,
-                    decoration: InputDecoration(
-                      labelText: 'Open Timing',
-                      hintText: 'Enter your timing',
-                      prefixIcon: Icon(Icons.lock_outline_rounded),
-                      border: OutlineInputBorder(),
-                    )),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: TextFormField(
+                  controller: farmTiming,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
+                  decoration: const InputDecoration(
+                    labelText: 'Opening Closing Time',
+                    hintText: 'Enter your Timing',
+                    prefixIcon: Icon(Icons.pan_tool_sharp),
+                    border: OutlineInputBorder(),
+                  ),
+                  //minLines: 2,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: TextFormField(
+                  controller: farmRules,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
+                  decoration: const InputDecoration(
+                    labelText: 'Rulse For Visitors',
+                    hintText: 'Enter your Rules to visit',
+                    prefixIcon: Icon(Icons.pan_tool_sharp),
+                    border: OutlineInputBorder(),
+                  ),
+                  //minLines: 2,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: TextFormField(
+                  controller: farmCharges,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
+                  decoration: const InputDecoration(
+                    labelText: 'Charge to Visit',
+                    hintText: 'Enter your Charge to visit',
+                    prefixIcon: Icon(Icons.pan_tool_sharp),
+                    border: OutlineInputBorder(),
+                  ),
+                  //minLines: 2,
+                ),
               ),
               Row(
                 children: <Widget>[
@@ -154,7 +260,7 @@ class _update_farm_profileState extends State<update_farm_profile> {
                       onPressed: () {
                         selectImage(2);
                       },
-                      child: const Text('Select Image Files For Slider'),
+                      child: const Text('Select Image 2 Files For Slider'),
                     ),
                   ),
                   Expanded(
@@ -188,7 +294,7 @@ class _update_farm_profileState extends State<update_farm_profile> {
                       onPressed: () {
                         selectImage(3);
                       },
-                      child: const Text('Select Image Files For Slider'),
+                      child: const Text('Select Image 3 Files For Slider'),
                     ),
                   ),
                   Expanded(
@@ -222,7 +328,7 @@ class _update_farm_profileState extends State<update_farm_profile> {
                       onPressed: () {
                         selectImage(4);
                       },
-                      child: const Text('Select Image Files For Slider'),
+                      child: const Text('Select Image 4 Files For Slider'),
                     ),
                   ),
                   Expanded(
@@ -256,7 +362,7 @@ class _update_farm_profileState extends State<update_farm_profile> {
                       onPressed: () {
                         selectImage(5);
                       },
-                      child: const Text('Select Image Files For Slider'),
+                      child: const Text('Select Image 5 Files For Slider'),
                     ),
                   ),
                   Expanded(
@@ -306,50 +412,105 @@ class _update_farm_profileState extends State<update_farm_profile> {
 
   clearMenusUploadForm() {
     setState(() {
-      shortInfoController.clear();
-      titleController.clear();
-      priceController.clear();
-      descriptionController.clear();
+      farmName.clear();
+      farmAddress.clear();
+      farmFeatures.clear();
+      farmDetails.clear();
+      farmTiming.clear();
+      farmRules.clear();
+      farmCharges.clear();
 
       imageXFile = null;
     });
   }
 
-  saveInfo(String downloadUrl) {
+  validateUploadForm() async {
+    if (selectedImage.isNotEmpty) {
+      if (farmName.text.isNotEmpty &&
+          farmAddress.text.isNotEmpty &&
+          farmFeatures.text.isNotEmpty &&
+          farmDetails.text.isNotEmpty &&
+          farmTiming.text.isNotEmpty &&
+          farmRules.text.isNotEmpty &&
+          farmCharges.text.isNotEmpty) {
+        setState(() {
+          uploading = true;
+        });
+
+        //upload image
+        List<String> url = [];
+        for (int i = 0; i < selectedImage.length; i++) {
+          String downloadUrl = await uploadImage(File(selectedImage[i].path));
+          url.add(downloadUrl);
+        }
+
+        //save info to firestore
+        saveInfo(url);
+      } else {
+        showDialog(
+            context: context,
+            builder: (c) {
+              return ErrorDialog(
+                message: "Please write title and info for farm Details.",
+              );
+            });
+      }
+    } else {
+      showDialog(
+          context: context,
+          builder: (c) {
+            return ErrorDialog(
+              message: "Please pick all images for slider.",
+            );
+          });
+    }
+  }
+
+  saveInfo(List<String> url) {
     final ref = FirebaseFirestore.instance
         .collection("sellers")
         .doc(sharedPreferences!.getString("uid"))
-        .collection("menus")
-        .doc(widget.model!.sellerUID)
-        .collection("items");
+        .collection("firmVisit");
 
-    ref.doc(uniqueIdName).set({
-      "itemID": uniqueIdName,
-      "menuID": widget.model!.sellerUID,
+    ref.doc("farmDetails").set({
+      "farmName": farmName,
+      "farmAddress": farmAddress,
+      "farmDetails": farmDetails,
+      "farmFeatures": farmFeatures,
+      "farmTiming": farmTiming,
+      "farmRules": farmRules,
+      "farmCharges": farmCharges,
       "sellerUID": sharedPreferences!.getString("uid"),
       "sellerName": sharedPreferences!.getString("name"),
-      "shortInfo": shortInfoController.text.toString(),
-      "longDescription": descriptionController.text.toString(),
-      "price": int.parse(priceController.text),
       "title": titleController.text.toString(),
       "publishedDate": DateTime.now(),
       "status": "available",
-      "thumbnailUrl": downloadUrl,
+      "s_img1": url[0],
+      "s_img2": url[1],
+      "s_img3": url[2],
+      "s_img4": url[3],
+      "s_img5": url[4],
     }).then((value) {
-      final itemsRef = FirebaseFirestore.instance.collection("items");
+      final itemsRef = FirebaseFirestore.instance.collection("firmVisit");
 
-      itemsRef.doc(uniqueIdName).set({
-        "itemID": uniqueIdName,
-        "menuID": widget.model!.sellerUID,
+      itemsRef.doc("farmDetails").set({
+        "farmName": farmName,
+        "farmAddress": farmAddress,
+        "farmDetails": farmDetails,
+        "farmFeatures": farmFeatures,
+        "farmTiming": farmTiming,
+        "farmRules": farmRules,
+        "farmCharges": farmCharges,
         "sellerUID": sharedPreferences!.getString("uid"),
         "sellerName": sharedPreferences!.getString("name"),
-        "shortInfo": shortInfoController.text.toString(),
-        "longDescription": descriptionController.text.toString(),
-        "price": int.parse(priceController.text),
         "title": titleController.text.toString(),
         "publishedDate": DateTime.now(),
         "status": "available",
-        "thumbnailUrl": downloadUrl,
+        "s_img1": url[0],
+        "s_img2": url[1],
+        "s_img3": url[2],
+        "s_img4": url[3],
+        "s_img5": url[4],
       });
     }).then((value) {
       clearMenusUploadForm();
