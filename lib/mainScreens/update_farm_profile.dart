@@ -1,11 +1,11 @@
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart' as storageRef;
-import 'package:flutter/material.dart';
 import 'package:agrivillage_sellers_app/mainScreens/farm_profile.dart';
 import 'package:agrivillage_sellers_app/model/farm.dart';
 import 'package:agrivillage_sellers_app/widgets/error_dialog.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart' as storageRef;
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../global/global.dart';
@@ -13,7 +13,7 @@ import '../widgets/progress_bar.dart';
 
 class update_farm_profile extends StatefulWidget {
   const update_farm_profile({Key? key, this.model}) : super(key: key);
-  final Menus? model;
+  final Farm? model;
 
   @override
   State<update_farm_profile> createState() => _update_farm_profileState();

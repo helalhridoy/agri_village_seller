@@ -1,12 +1,20 @@
-import 'package:flutter/material.dart';
 import 'package:agrivillage_sellers_app/mainScreens/update_farm_profile.dart';
+import 'package:agrivillage_sellers_app/model/farm.dart';
+import 'package:agrivillage_sellers_app/widgets/farm_design_widget.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import '../global/global.dart';
 import '../widgets/my_drawer.dart';
+import '../widgets/progress_bar.dart';
+import '../widgets/text_widget_header.dart';
 
 class farm_profile extends StatefulWidget {
-  const farm_profile({Key? key}) : super(key: key);
+  //const farm_profile({Key? key, this.model}) : super(key: key);
 
+  const farm_profile({Key? key, this.model}) : super(key: key);
+  final Farm? model;
   @override
   State<farm_profile> createState() => _farm_profileState();
 }
@@ -34,12 +42,51 @@ class _farm_profileState extends State<farm_profile> {
                   MaterialPageRoute(
                       builder: (c) => const update_farm_profile()));
             },
-            child: Text(
+            child: const Text(
               "Update",
               style: TextStyle(
                 color: Colors.white,
               ),
             ),
+          ),
+        ],
+      ),
+      body: CustomScrollView(
+        slivers: [
+          SliverPersistentHeader(
+              pinned: true,
+              delegate: TextWidgetHeader(
+                  title: sharedPreferences!.getString("name")!.toUpperCase() +
+                      " Profile")),
+          StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance
+                .collection("sellers")
+                .doc(sharedPreferences!.getString("uid"))
+                .collection("firmVisit")
+                .snapshots(),
+            builder: (context, snapshot) {
+              return !snapshot.hasData
+                  ? SliverToBoxAdapter(
+                      child: Center(
+                        child: circularProgress(),
+                      ),
+                    )
+                  : SliverStaggeredGrid.countBuilder(
+                      crossAxisCount: 1,
+                      staggeredTileBuilder: (c) => StaggeredTile.fit(1),
+                      itemBuilder: (context, index) {
+                        Farm model = Farm.fromJson(
+                          snapshot.data!.docs[index].data()!
+                              as Map<String, dynamic>,
+                        );
+                        return farm_design_widget(
+                          model: model,
+                          context: context,
+                        );
+                      },
+                      itemCount: snapshot.data!.docs.length,
+                    );
+            },
           ),
         ],
       ),
