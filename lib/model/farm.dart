@@ -41,7 +41,7 @@ class Farm {
     sellerName = json['sellerName'];
     sellerUID = json['sellerUID'];
     farmName = json['farmName'];
-    farmAddress = json['farmLocation'];
+    farmAddress = json['farmAddress'];
     publishedDate = json['publishedDate'];
     farmDetails = json['farmDetails'];
     farmFeatures = json['farmFeatures'];
@@ -62,7 +62,7 @@ class Farm {
     data['sellerName'] = sellerName;
     data['sellerUID'] = sellerUID;
     data['farmName'] = farmName;
-    data['farmLocation'] = farmAddress;
+    data['farmAddress'] = farmAddress;
     data['publishedDate'] = publishedDate;
     data['farmDetails'] = farmDetails;
     data['farmFeatures'] = farmFeatures;

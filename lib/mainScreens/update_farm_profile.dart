@@ -327,7 +327,7 @@ class _update_farm_profileState extends State<update_farm_profile> {
                       height: 100,
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
-                        child: selectedImage.length >= 2
+                        child: selectedImage.length >= 1
                             ? Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Image.file(
@@ -491,15 +491,19 @@ class _update_farm_profileState extends State<update_farm_profile> {
     try {
       if (selectedImage.length >= i) {
         XFile? img = await _picker.pickImage(source: ImageSource.gallery);
-        selectedImage[i - 1] = img!;
+
+        setState(() {
+          selectedImage[i - 1] = img!;
+        });
       } else {
         XFile? img = await _picker.pickImage(source: ImageSource.gallery);
-        selectedImage.add(img!);
+        setState(() {
+          selectedImage.add(img!);
+        });
       }
     } catch (e) {
       print("Something went wrong" + e.toString());
     }
-    setState(() {});
   }
 
   clearMenusUploadForm() {
@@ -531,10 +535,12 @@ class _update_farm_profileState extends State<update_farm_profile> {
 
         //upload image
         List<String> url = [];
-        for (int i = 0; i < selectedImage.length; i++) {
-          String downloadUrl = await uploadImage(File(selectedImage[i].path));
-          url.add(downloadUrl);
-        }
+
+        url.add(await uploadImage(File(selectedImage[0].path), 0));
+        url.add(await uploadImage(File(selectedImage[1].path), 1));
+        url.add(await uploadImage(File(selectedImage[2].path), 2));
+        url.add(await uploadImage(File(selectedImage[3].path), 3));
+        url.add(await uploadImage(File(selectedImage[4].path), 4));
 
         //save info to firestore
         saveInfo(url);
@@ -583,7 +589,10 @@ class _update_farm_profileState extends State<update_farm_profile> {
       "s_img4": url[3],
       "s_img5": url[4],
     }).then((value) {
-      final itemsRef = FirebaseFirestore.instance.collection("firmVisit");
+      final itemsRef = FirebaseFirestore.instance
+          .collection("sellers")
+          .doc(sharedPreferences!.getString("uid"))
+          .collection("firmVisit");
 
       itemsRef.doc("farmDetails").set({
         "farmName": farmName.text.toString(),
@@ -614,12 +623,15 @@ class _update_farm_profileState extends State<update_farm_profile> {
     });
   }
 
-  uploadImage(mImageFile) async {
-    storageRef.Reference reference =
-        storageRef.FirebaseStorage.instance.ref().child("items");
+  uploadImage(mImageFile, int i) async {
+    storageRef.Reference reference = storageRef.FirebaseStorage.instance
+        .ref()
+        .child("sellers")
+        .child("sliders");
 
-    storageRef.UploadTask uploadTask =
-        reference.child(uniqueIdName + ".jpg").putFile(mImageFile);
+    storageRef.UploadTask uploadTask = reference
+        .child(uniqueIdName + i.toString() + ".jpg")
+        .putFile(mImageFile);
 
     storageRef.TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() {});
 

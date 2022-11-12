@@ -15,6 +15,7 @@ class farm_profile extends StatefulWidget {
 
   const farm_profile({Key? key, this.model}) : super(key: key);
   final Farm? model;
+
   @override
   State<farm_profile> createState() => _farm_profileState();
 }
@@ -43,7 +44,7 @@ class _farm_profileState extends State<farm_profile> {
                       builder: (c) => const update_farm_profile()));
             },
             child: const Text(
-              "Update",
+              "add/Update",
               style: TextStyle(
                 color: Colors.white,
               ),
