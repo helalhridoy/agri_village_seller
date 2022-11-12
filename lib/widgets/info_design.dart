@@ -1,14 +1,11 @@
+import 'package:agrivillage_sellers_app/global/global.dart';
+import 'package:agrivillage_sellers_app/mainScreens/itemsScreen.dart';
+import 'package:agrivillage_sellers_app/model/menus.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:foodpanda_sellers_app/global/global.dart';
-import 'package:foodpanda_sellers_app/mainScreens/itemsScreen.dart';
-import 'package:foodpanda_sellers_app/model/menus.dart';
 
-
-
-class InfoDesignWidget extends StatefulWidget
-{
+class InfoDesignWidget extends StatefulWidget {
   Menus? model;
   BuildContext? context;
 
@@ -18,13 +15,10 @@ class InfoDesignWidget extends StatefulWidget
   _InfoDesignWidgetState createState() => _InfoDesignWidgetState();
 }
 
-
-
-class _InfoDesignWidgetState extends State<InfoDesignWidget>
-{
-  deleteMenu(String menuID)
-  {
-    FirebaseFirestore.instance.collection("sellers")
+class _InfoDesignWidgetState extends State<InfoDesignWidget> {
+  deleteMenu(String menuID) {
+    FirebaseFirestore.instance
+        .collection("sellers")
         .doc(sharedPreferences!.getString("uid"))
         .collection("menus")
         .doc(menuID)
@@ -36,9 +30,11 @@ class _InfoDesignWidgetState extends State<InfoDesignWidget>
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: ()
-      {
-        Navigator.push(context, MaterialPageRoute(builder: (c)=> ItemsScreen(model: widget.model)));
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (c) => ItemsScreen(model: widget.model)));
       },
       splashColor: Colors.amber,
       child: Padding(
@@ -54,12 +50,13 @@ class _InfoDesignWidgetState extends State<InfoDesignWidget>
                 color: Colors.grey[300],
               ),
               Image.network(
-                  widget.model!.thumbnailUrl!,
-                  height: 220.0,
+                widget.model!.thumbnailUrl!,
+                height: 220.0,
                 fit: BoxFit.cover,
               ),
-              const SizedBox(height: 1.0,),
-
+              const SizedBox(
+                height: 1.0,
+              ),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -77,15 +74,13 @@ class _InfoDesignWidgetState extends State<InfoDesignWidget>
                       Icons.delete_sweep,
                       color: Colors.pinkAccent,
                     ),
-                    onPressed: ()
-                    {
+                    onPressed: () {
                       //delete menu
                       deleteMenu(widget.model!.menuID!);
                     },
                   ),
                 ],
               ),
-
 
               // Text(
               //   widget.model!.menuInfo!,

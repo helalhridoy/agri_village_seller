@@ -1,8 +1,7 @@
+import 'package:agrivillage_sellers_app/widgets/progress_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:foodpanda_sellers_app/widgets/progress_bar.dart';
 
-class LoadingDialog extends StatelessWidget
-{
+class LoadingDialog extends StatelessWidget {
   final String? message;
 
   LoadingDialog({this.message});
@@ -15,7 +14,9 @@ class LoadingDialog extends StatelessWidget
         mainAxisSize: MainAxisSize.min,
         children: [
           circularProgress(),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Text(message! + ", Please wait..."),
         ],
       ),

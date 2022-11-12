@@ -1,6 +1,6 @@
 {
-    "name": "foodpanda_sellers_app",
-    "short_name": "foodpanda_sellers_app",
+    "name": "agrivillage_sellers_app",
+    "short_name": "agrivillage_sellers_app",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foodpanda_sellers_app/mainScreens/update_farm_profile.dart';
+import 'package:agrivillage_sellers_app/mainScreens/update_farm_profile.dart';
 
 import '../global/global.dart';
 import '../widgets/my_drawer.dart';

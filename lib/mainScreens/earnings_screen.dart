@@ -1,31 +1,24 @@
+import 'package:agrivillage_sellers_app/global/global.dart';
+import 'package:agrivillage_sellers_app/splashScreen/splash_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:foodpanda_sellers_app/global/global.dart';
-import 'package:foodpanda_sellers_app/splashScreen/splash_screen.dart';
 
-
-class EarningsScreen extends StatefulWidget
-{
+class EarningsScreen extends StatefulWidget {
   const EarningsScreen({Key? key}) : super(key: key);
 
   @override
   _EarningsScreenState createState() => _EarningsScreenState();
 }
 
-
-
-
-class _EarningsScreenState extends State<EarningsScreen>
-{
+class _EarningsScreenState extends State<EarningsScreen> {
   double sellerTotalEarnings = 0;
 
-  retrieveSellerEarnings() async
-  {
+  retrieveSellerEarnings() async {
     await FirebaseFirestore.instance
         .collection("sellers")
         .doc(sharedPreferences!.getString("uid"))
-        .get().then((snap)
-    {
+        .get()
+        .then((snap) {
       setState(() {
         sellerTotalEarnings = double.parse(snap.data()!["earnings"].toString());
       });
@@ -40,8 +33,7 @@ class _EarningsScreenState extends State<EarningsScreen>
   }
 
   @override
-  Widget build(BuildContext context)
-  {
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
@@ -49,26 +41,20 @@ class _EarningsScreenState extends State<EarningsScreen>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-
               Text(
                 "৳ " + sellerTotalEarnings.toString(),
                 style: const TextStyle(
-                  fontSize: 80,
-                  color: Colors.white,
-                  fontFamily: "Signatra"
-                ),
+                    fontSize: 80, color: Colors.white, fontFamily: "Signatra"),
               ),
-
               const Text(
                 "Total Earnings",
                 style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.grey,
-                    letterSpacing: 3,
-                    fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  color: Colors.grey,
+                  letterSpacing: 3,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-
               const SizedBox(
                 height: 20,
                 width: 200,
@@ -77,13 +63,15 @@ class _EarningsScreenState extends State<EarningsScreen>
                   thickness: 1.5,
                 ),
               ),
-
-              const SizedBox(height: 40.0,),
-
+              const SizedBox(
+                height: 40.0,
+              ),
               GestureDetector(
-                onTap: ()
-                {
-                  Navigator.push(context, MaterialPageRoute(builder: (c)=> const MySplashScreen()));
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (c) => const MySplashScreen()));
                 },
                 child: const Card(
                   color: Colors.white54,
@@ -105,7 +93,6 @@ class _EarningsScreenState extends State<EarningsScreen>
                   ),
                 ),
               ),
-
             ],
           ),
         ),

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:foodpanda_sellers_app/authentication/auth_screen.dart';
-import 'package:foodpanda_sellers_app/global/global.dart';
-import 'package:foodpanda_sellers_app/mainScreens/earnings_screen.dart';
-import 'package:foodpanda_sellers_app/mainScreens/farm_profile.dart';
-import 'package:foodpanda_sellers_app/mainScreens/history_screen.dart';
-import 'package:foodpanda_sellers_app/mainScreens/home_screen.dart';
-import 'package:foodpanda_sellers_app/mainScreens/new_orders_screen.dart';
+import 'package:agrivillage_sellers_app/authentication/auth_screen.dart';
+import 'package:agrivillage_sellers_app/global/global.dart';
+import 'package:agrivillage_sellers_app/mainScreens/earnings_screen.dart';
+import 'package:agrivillage_sellers_app/mainScreens/farm_profile.dart';
+import 'package:agrivillage_sellers_app/mainScreens/history_screen.dart';
+import 'package:agrivillage_sellers_app/mainScreens/home_screen.dart';
+import 'package:agrivillage_sellers_app/mainScreens/new_orders_screen.dart';
 
 class MyDrawer extends StatelessWidget {
   @override

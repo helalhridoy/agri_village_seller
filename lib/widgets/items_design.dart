@@ -1,13 +1,8 @@
+import 'package:agrivillage_sellers_app/mainScreens/item_detail_screen.dart';
+import 'package:agrivillage_sellers_app/model/items.dart';
 import 'package:flutter/material.dart';
-import 'package:foodpanda_sellers_app/mainScreens/item_detail_screen.dart';
-import 'package:foodpanda_sellers_app/mainScreens/itemsScreen.dart';
-import 'package:foodpanda_sellers_app/model/items.dart';
-import 'package:foodpanda_sellers_app/model/menus.dart';
 
-
-
-class ItemsDesignWidget extends StatefulWidget
-{
+class ItemsDesignWidget extends StatefulWidget {
   Items? model;
   BuildContext? context;
 
@@ -17,15 +12,15 @@ class ItemsDesignWidget extends StatefulWidget
   _ItemsDesignWidgetState createState() => _ItemsDesignWidgetState();
 }
 
-
-
 class _ItemsDesignWidgetState extends State<ItemsDesignWidget> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: ()
-      {
-        Navigator.push(context, MaterialPageRoute(builder: (c)=> ItemDetailsScreen(model: widget.model)));
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (c) => ItemDetailsScreen(model: widget.model)));
       },
       splashColor: Colors.amber,
       child: Padding(
@@ -40,7 +35,9 @@ class _ItemsDesignWidgetState extends State<ItemsDesignWidget> {
                 thickness: 3,
                 color: Colors.grey[300],
               ),
-              const SizedBox(height: 1,),
+              const SizedBox(
+                height: 1,
+              ),
               Text(
                 widget.model!.title!,
                 style: const TextStyle(
@@ -49,13 +46,17 @@ class _ItemsDesignWidgetState extends State<ItemsDesignWidget> {
                   fontFamily: "Train",
                 ),
               ),
-              const SizedBox(height: 2,),
+              const SizedBox(
+                height: 2,
+              ),
               Image.network(
                 widget.model!.thumbnailUrl!,
                 height: 220.0,
                 fit: BoxFit.cover,
               ),
-              const SizedBox(height: 2.0,),
+              const SizedBox(
+                height: 2.0,
+              ),
               Text(
                 widget.model!.shortInfo!,
                 style: const TextStyle(
@@ -63,7 +64,9 @@ class _ItemsDesignWidgetState extends State<ItemsDesignWidget> {
                   fontSize: 12,
                 ),
               ),
-              const SizedBox(height: 1,),
+              const SizedBox(
+                height: 1,
+              ),
               Divider(
                 height: 4,
                 thickness: 3,

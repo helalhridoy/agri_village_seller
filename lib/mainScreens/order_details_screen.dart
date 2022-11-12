@@ -1,14 +1,12 @@
+import 'package:agrivillage_sellers_app/model/address.dart';
+import 'package:agrivillage_sellers_app/widgets/progress_bar.dart';
+import 'package:agrivillage_sellers_app/widgets/shipment_address_design.dart';
+import 'package:agrivillage_sellers_app/widgets/status_banner.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:foodpanda_sellers_app/model/address.dart';
-import 'package:foodpanda_sellers_app/widgets/progress_bar.dart';
-import 'package:foodpanda_sellers_app/widgets/shipment_address_design.dart';
-import 'package:foodpanda_sellers_app/widgets/status_banner.dart';
 import 'package:intl/intl.dart';
 
-
-class OrderDetailsScreen extends StatefulWidget
-{
+class OrderDetailsScreen extends StatefulWidget {
   final String? orderID;
 
   OrderDetailsScreen({this.orderID});
@@ -17,21 +15,17 @@ class OrderDetailsScreen extends StatefulWidget
   _OrderDetailsScreenState createState() => _OrderDetailsScreenState();
 }
 
-
-
-
-class _OrderDetailsScreenState extends State<OrderDetailsScreen>
-{
+class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   String orderStatus = "";
   String orderByUser = "";
   String sellerId = "";
 
-  getOrderInfo()
-  {
+  getOrderInfo() {
     FirebaseFirestore.instance
         .collection("orders")
-        .doc(widget.orderID).get().then((DocumentSnapshot)
-    {
+        .doc(widget.orderID)
+        .get()
+        .then((DocumentSnapshot) {
       orderStatus = DocumentSnapshot.data()!["status"].toString();
       orderByUser = DocumentSnapshot.data()!["orderBy"].toString();
       sellerId = DocumentSnapshot.data()!["sellerUID"].toString();
@@ -46,8 +40,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen>
   }
 
   @override
-  Widget build(BuildContext context)
-  {
+  Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         child: FutureBuilder<DocumentSnapshot>(
@@ -55,11 +48,9 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen>
               .collection("orders")
               .doc(widget.orderID)
               .get(),
-          builder: (c, snapshot)
-          {
+          builder: (c, snapshot) {
             Map? dataMap;
-            if(snapshot.hasData)
-            {
+            if (snapshot.hasData) {
               dataMap = snapshot.data!.data()! as Map<String, dynamic>;
               orderStatus = dataMap["status"].toString();
             }
@@ -98,16 +89,22 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen>
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
                             "Order at: " +
-                                DateFormat("dd MMMM, yyyy - hh:mm aa")
-                                    .format(DateTime.fromMillisecondsSinceEpoch(int.parse(dataMap["orderTime"]))),
-                            style: const TextStyle(fontSize: 16, color: Colors.grey),
+                                DateFormat("dd MMMM, yyyy - hh:mm aa").format(
+                                    DateTime.fromMillisecondsSinceEpoch(
+                                        int.parse(dataMap["orderTime"]))),
+                            style: const TextStyle(
+                                fontSize: 16, color: Colors.grey),
                           ),
                         ),
-                        const Divider(thickness: 4,),
+                        const Divider(
+                          thickness: 4,
+                        ),
                         orderStatus != "ended"
                             ? Image.asset("images/packing.png")
                             : Image.asset("images/delivered.jpg"),
-                        const Divider(thickness: 4,),
+                        const Divider(
+                          thickness: 4,
+                        ),
                         FutureBuilder<DocumentSnapshot>(
                           future: FirebaseFirestore.instance
                               .collection("users")
@@ -115,25 +112,27 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen>
                               .collection("userAddress")
                               .doc(dataMap["addressID"])
                               .get(),
-                          builder: (c, snapshot)
-                          {
+                          builder: (c, snapshot) {
                             return snapshot.hasData
                                 ? ShipmentAddressDesign(
-                                    model: Address.fromJson(
-                                      snapshot.data!.data()! as Map<String, dynamic>
-                                    ),
+                                    model: Address.fromJson(snapshot.data!
+                                        .data()! as Map<String, dynamic>),
                                     orderStatus: orderStatus,
                                     orderId: widget.orderID,
                                     sellerId: sellerId,
                                     orderByUser: orderByUser,
                                   )
-                                : Center(child: circularProgress(),);
+                                : Center(
+                                    child: circularProgress(),
+                                  );
                           },
                         ),
                       ],
                     ),
                   )
-                : Center(child: circularProgress(),);
+                : Center(
+                    child: circularProgress(),
+                  );
           },
         ),
       ),

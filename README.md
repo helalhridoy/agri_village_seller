@@ -1,4 +1,4 @@
-# foodpanda_sellers_app
+# agrivillage_sellers_app
 
 A new Flutter project.
 

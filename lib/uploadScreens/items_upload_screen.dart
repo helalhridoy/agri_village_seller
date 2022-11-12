@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart' as storageRef;
 import 'package:flutter/material.dart';
-import 'package:foodpanda_sellers_app/global/global.dart';
-import 'package:foodpanda_sellers_app/mainScreens/home_screen.dart';
-import 'package:foodpanda_sellers_app/model/menus.dart';
-import 'package:foodpanda_sellers_app/widgets/error_dialog.dart';
-import 'package:foodpanda_sellers_app/widgets/progress_bar.dart';
+import 'package:agrivillage_sellers_app/global/global.dart';
+import 'package:agrivillage_sellers_app/mainScreens/home_screen.dart';
+import 'package:agrivillage_sellers_app/model/menus.dart';
+import 'package:agrivillage_sellers_app/widgets/error_dialog.dart';
+import 'package:agrivillage_sellers_app/widgets/progress_bar.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ItemsUploadScreen extends StatefulWidget {
