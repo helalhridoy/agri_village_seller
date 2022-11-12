@@ -9,7 +9,6 @@ import 'package:foodpanda_sellers_app/widgets/error_dialog.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../global/global.dart';
-import '../widgets/my_drawer.dart';
 import '../widgets/progress_bar.dart';
 
 class update_farm_profile extends StatefulWidget {
@@ -38,16 +37,109 @@ class _update_farm_profileState extends State<update_farm_profile> {
   TextEditingController descriptionController = TextEditingController();
   TextEditingController priceController = TextEditingController();
   bool uploading = false;
+  bool start = false;
   String uniqueIdName = DateTime.now().millisecondsSinceEpoch.toString();
   //FirebaseStorage _storage = FirebaseStorage.instance;
 
-  @override
-  Widget build(BuildContext context) {
+  defaultScreen() {
     return Scaffold(
-      drawer: MyDrawer(),
       appBar: AppBar(
         flexibleSpace: Container(
-          color: Colors.green,
+          decoration: const BoxDecoration(
+              gradient: LinearGradient(
+            colors: [
+              Colors.cyan,
+              Colors.amber,
+            ],
+            begin: FractionalOffset(0.0, 0.0),
+            end: FractionalOffset(1.0, 0.0),
+            stops: [0.0, 1.0],
+            tileMode: TileMode.clamp,
+          )),
+        ),
+        title: const Text(
+          "Add New Items",
+          style: TextStyle(fontSize: 30, fontFamily: "Lobster"),
+        ),
+        centerTitle: true,
+        automaticallyImplyLeading: true,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (c) => const farm_profile()));
+          },
+        ),
+      ),
+      body: Container(
+        decoration: const BoxDecoration(
+            gradient: LinearGradient(
+          colors: [
+            Colors.cyan,
+            Colors.amber,
+          ],
+          begin: FractionalOffset(0.0, 0.0),
+          end: FractionalOffset(1.0, 0.0),
+          stops: [0.0, 1.0],
+          tileMode: TileMode.clamp,
+        )),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(
+                Icons.shop_two,
+                color: Colors.white,
+                size: 200.0,
+              ),
+              ElevatedButton(
+                child: const Text(
+                  "Update Profile Info Item",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                  ),
+                ),
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.amber),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                ),
+                onPressed: () {
+                  setState(() {
+                    start = true;
+                  });
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  upload_farm_details() {
+    return Scaffold(
+      appBar: AppBar(
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+              gradient: LinearGradient(
+            colors: [
+              Colors.cyan,
+              Colors.amber,
+            ],
+            begin: FractionalOffset(0.0, 0.0),
+            end: FractionalOffset(1.0, 0.0),
+            stops: [0.0, 1.0],
+            tileMode: TileMode.clamp,
+          )),
         ),
         title: const Text(
           "Updating Farm Details",
@@ -473,13 +565,13 @@ class _update_farm_profileState extends State<update_farm_profile> {
         .collection("firmVisit");
 
     ref.doc("farmDetails").set({
-      "farmName": farmName,
-      "farmAddress": farmAddress,
-      "farmDetails": farmDetails,
-      "farmFeatures": farmFeatures,
-      "farmTiming": farmTiming,
-      "farmRules": farmRules,
-      "farmCharges": farmCharges,
+      "farmName": farmName.text.toString(),
+      "farmAddress": farmAddress.text.toString(),
+      "farmDetails": farmDetails.text.toString(),
+      "farmFeatures": farmFeatures.text.toString(),
+      "farmTiming": farmTiming.text.toString(),
+      "farmRules": farmRules.text.toString(),
+      "farmCharges": farmCharges.text.toString(),
       "sellerUID": sharedPreferences!.getString("uid"),
       "sellerName": sharedPreferences!.getString("name"),
       "title": titleController.text.toString(),
@@ -494,13 +586,13 @@ class _update_farm_profileState extends State<update_farm_profile> {
       final itemsRef = FirebaseFirestore.instance.collection("firmVisit");
 
       itemsRef.doc("farmDetails").set({
-        "farmName": farmName,
-        "farmAddress": farmAddress,
-        "farmDetails": farmDetails,
-        "farmFeatures": farmFeatures,
-        "farmTiming": farmTiming,
-        "farmRules": farmRules,
-        "farmCharges": farmCharges,
+        "farmName": farmName.text.toString(),
+        "farmAddress": farmAddress.text.toString(),
+        "farmDetails": farmDetails.text.toString(),
+        "farmFeatures": farmFeatures.text.toString(),
+        "farmTiming": farmTiming.text.toString(),
+        "farmRules": farmRules.text.toString(),
+        "farmCharges": farmCharges.text.toString(),
         "sellerUID": sharedPreferences!.getString("uid"),
         "sellerName": sharedPreferences!.getString("name"),
         "title": titleController.text.toString(),
@@ -534,5 +626,10 @@ class _update_farm_profileState extends State<update_farm_profile> {
     String downloadURL = await taskSnapshot.ref.getDownloadURL();
 
     return downloadURL;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return start == false ? defaultScreen() : upload_farm_details();
   }
 }
