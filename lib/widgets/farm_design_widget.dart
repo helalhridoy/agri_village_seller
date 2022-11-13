@@ -1,6 +1,7 @@
 import 'package:agrivillage_sellers_app/mainScreens/farm_profile.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:getwidget/components/list_tile/gf_list_tile.dart';
 
 import '../model/farm.dart';
 
@@ -146,117 +147,33 @@ class _farm_design_widgetState extends State<farm_design_widget> {
                   ),
                 ),
               ),
-              SizedBox(
-                width: double.maxFinite,
-                child: DecoratedBox(
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(5),
-                    ),
-                  ),
-                  child: Text(
-                    "FarmDetails:  " + widget.model!.farmDetails!,
-                    style: const TextStyle(
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
+              GFListTile(
+                titleText: "FarmDetails:",
+                subTitleText: widget.model!.farmDetails!,
               ),
-              SizedBox(
-                width: double.maxFinite,
-                child: DecoratedBox(
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(5),
-                    ),
-                  ),
-                  child: Text(
-                    "Farm Features:  " + widget.model!.farmFeatures!,
-                    style: const TextStyle(
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
+              GFListTile(
+                titleText: "Farm Features:  ",
+                subTitleText: widget.model!.farmFeatures!,
               ),
-              SizedBox(
-                width: double.maxFinite,
-                child: DecoratedBox(
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(5),
-                    ),
-                  ),
-                  child: Text(
-                    "Farm Rules:  " + widget.model!.farmRules!,
-                    style: const TextStyle(
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
+              GFListTile(
+                titleText: "Farm Rules :",
+                subTitleText: widget.model!.farmRules!,
               ),
-              SizedBox(
-                width: double.maxFinite,
-                child: DecoratedBox(
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(5),
-                    ),
-                  ),
-                  child: Text(
-                    "Farm Address:  " + widget.model!.farmCharges!,
-                    style: const TextStyle(
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
+              GFListTile(
+                titleText: "Farm Address:  ",
+                subTitleText: widget.model!.farmDetails!,
               ),
-              SizedBox(
-                width: double.maxFinite,
-                child: DecoratedBox(
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(5),
-                    ),
-                  ),
-                  child: Text(
-                    "FarmDetails:  " + widget.model!.farmAddress!,
-                    style: const TextStyle(
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
+              GFListTile(
+                titleText: "Visiting Hour:",
+                subTitleText: widget.model!.farmTiming!,
               ),
-              SizedBox(
-                width: double.maxFinite,
-                child: DecoratedBox(
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(5),
-                    ),
-                  ),
-                  child: Text(
-                    "Farm Status:  " + widget.model!.status!,
-                    style: const TextStyle(
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
+              GFListTile(
+                titleText: "Farm Charges:",
+                subTitleText: widget.model!.farmCharges!,
               ),
-              SizedBox(
-                width: double.maxFinite,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(5),
-                    ),
-                  ),
-                  child: Text(
-                    "Farm Visiting Time:  " + widget.model!.farmTiming!,
-                    style: TextStyle(
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
+              GFListTile(
+                titleText: "Farm Status:",
+                subTitleText: widget.model!.status!,
               ),
             ],
           ),
