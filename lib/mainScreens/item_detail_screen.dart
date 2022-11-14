@@ -5,6 +5,7 @@ import 'package:agrivillage_sellers_app/widgets/simple_app_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:getwidget/components/list_tile/gf_list_tile.dart';
 
 class ItemDetailsScreen extends StatefulWidget {
   final Items? model;
@@ -44,28 +45,38 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.network(widget.model!.thumbnailUrl.toString()),
+          SizedBox(
+            height: 10,
+          ),
+          SizedBox(
+            width: 400,
+            height: 200,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+
+              ),
+                child: Image.network(widget.model!.thumbnailUrl.toString())),
+          ),
+
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(10.0),
             child: Text(
               widget.model!.title.toString(),
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 22,color: Colors.green),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(10.0),
             child: Text(
               widget.model!.longDescription.toString(),
-              textAlign: TextAlign.justify,
-              style:
-                  const TextStyle(fontWeight: FontWeight.normal, fontSize: 14),
+              style: const TextStyle(fontWeight: FontWeight.normal, fontSize: 15,color: Colors.green),
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
               widget.model!.price.toString() + " ৳",
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 30,color:Colors.green),
             ),
           ),
           const SizedBox(
@@ -81,8 +92,8 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
                 decoration: const BoxDecoration(
                     gradient: LinearGradient(
                   colors: [
-                    Colors.cyan,
-                    Colors.amber,
+                    Colors.green,
+                    Colors.lime,
                   ],
                   begin: FractionalOffset(0.0, 0.0),
                   end: FractionalOffset(1.0, 0.0),

@@ -44,7 +44,7 @@ class _farm_profileState extends State<farm_profile> {
                       builder: (c) => const update_farm_profile()));
             },
             child: const Text(
-              "add/Update",
+              "Add/Update",
               style: TextStyle(
                 color: Colors.white,
               ),

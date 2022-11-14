@@ -41,19 +41,30 @@ class _ItemsDesignWidgetState extends State<ItemsDesignWidget> {
               Text(
                 widget.model!.title!,
                 style: const TextStyle(
-                  color: Colors.cyan,
-                  fontSize: 18,
+                  color: Colors.green,
+                  fontSize: 20,
+
                   fontFamily: "Train",
                 ),
               ),
               const SizedBox(
                 height: 2,
               ),
-              Image.network(
-                widget.model!.thumbnailUrl!,
-                height: 220.0,
-                fit: BoxFit.cover,
+              SizedBox(
+                width: 280,
+                height: 200,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    image: DecorationImage(
+                      fit: BoxFit.fill,
+                      image: NetworkImage(widget.model!.thumbnailUrl!),
+                    ),
+                  ),
+                ),
               ),
+
+
               const SizedBox(
                 height: 2.0,
               ),
@@ -61,7 +72,7 @@ class _ItemsDesignWidgetState extends State<ItemsDesignWidget> {
                 widget.model!.shortInfo!,
                 style: const TextStyle(
                   color: Colors.grey,
-                  fontSize: 12,
+                  fontSize: 15,
                 ),
               ),
               const SizedBox(

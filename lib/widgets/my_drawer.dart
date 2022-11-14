@@ -39,7 +39,7 @@ class MyDrawer extends StatelessWidget {
                 Text(
                   sharedPreferences!.getString("name")!,
                   style: TextStyle(
-                      color: Colors.black, fontSize: 20, fontFamily: "Train"),
+                      color: Colors.green, fontSize: 20, fontFamily: "Train"),
                 ),
               ],
             ),
@@ -56,17 +56,17 @@ class MyDrawer extends StatelessWidget {
               children: [
                 const Divider(
                   height: 10,
-                  color: Colors.grey,
+                  color: Colors.green,
                   thickness: 2,
                 ),
                 ListTile(
                   leading: const Icon(
                     Icons.home,
-                    color: Colors.black,
+                    color: Colors.green,
                   ),
                   title: const Text(
                     "Home",
-                    style: TextStyle(color: Colors.black),
+                    style: TextStyle(color: Colors.green),
                   ),
                   onTap: () {
                     Navigator.push(context,
@@ -81,11 +81,11 @@ class MyDrawer extends StatelessWidget {
                 ListTile(
                   leading: const Icon(
                     Icons.monetization_on,
-                    color: Colors.black,
+                    color: Colors.green,
                   ),
                   title: const Text(
                     "My Earnings",
-                    style: TextStyle(color: Colors.black),
+                    style: TextStyle(color: Colors.green),
                   ),
                   onTap: () {
                     Navigator.push(
@@ -102,11 +102,11 @@ class MyDrawer extends StatelessWidget {
                 ListTile(
                   leading: const Icon(
                     Icons.reorder,
-                    color: Colors.black,
+                    color: Colors.green,
                   ),
                   title: const Text(
                     "New orders",
-                    style: TextStyle(color: Colors.black),
+                    style: TextStyle(color: Colors.green),
                   ),
                   onTap: () {
                     Navigator.push(context,
@@ -121,11 +121,11 @@ class MyDrawer extends StatelessWidget {
                 ListTile(
                   leading: const Icon(
                     Icons.local_shipping,
-                    color: Colors.black,
+                    color: Colors.green,
                   ),
                   title: const Text(
                     "History - Orders",
-                    style: TextStyle(color: Colors.black),
+                    style: TextStyle(color: Colors.green),
                   ),
                   onTap: () {
                     Navigator.push(context,
@@ -140,11 +140,11 @@ class MyDrawer extends StatelessWidget {
                 ListTile(
                   leading: const Icon(
                     Icons.monetization_on,
-                    color: Colors.black,
+                    color: Colors.green,
                   ),
                   title: const Text(
                     "My Farm Profile",
-                    style: TextStyle(color: Colors.black),
+                    style: TextStyle(color: Colors.green),
                   ),
                   onTap: () {
                     Navigator.push(
@@ -161,11 +161,11 @@ class MyDrawer extends StatelessWidget {
                 ListTile(
                   leading: const Icon(
                     Icons.exit_to_app,
-                    color: Colors.black,
+                    color: Colors.green,
                   ),
                   title: const Text(
                     "Sign Out",
-                    style: TextStyle(color: Colors.black),
+                    style: TextStyle(color: Colors.green),
                   ),
                   onTap: () {
                     firebaseAuth.signOut().then((value) {
