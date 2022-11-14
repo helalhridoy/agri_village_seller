@@ -52,13 +52,13 @@ class _MySplashScreenState extends State<MySplashScreen> {
                 height: 10,
               ),
               const Padding(
-                padding: EdgeInsets.all(18.0),
+                padding: EdgeInsets.all(15.0),
                 child: Text(
                   "Serve Your Products to the nation",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Colors.black54,
-                    fontSize: 40,
+                    color: Colors.lightGreen,
+                    fontSize: 19,
                     fontFamily: "Train",
                     letterSpacing: 3,
                   ),

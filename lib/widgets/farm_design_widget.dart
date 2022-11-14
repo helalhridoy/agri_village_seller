@@ -161,7 +161,7 @@ class _farm_design_widgetState extends State<farm_design_widget> {
               ),
               GFListTile(
                 titleText: "Farm Address:  ",
-                subTitleText: widget.model!.farmDetails!,
+                subTitleText: widget.model!.farmAddress!,
               ),
               GFListTile(
                 titleText: "Visiting Hour:",
