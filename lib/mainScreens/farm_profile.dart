@@ -13,8 +13,9 @@ import '../widgets/text_widget_header.dart';
 class farm_profile extends StatefulWidget {
   //const farm_profile({Key? key, this.model}) : super(key: key);
 
-  const farm_profile({Key? key, this.model}) : super(key: key);
-  final Farm? model;
+  // final Farm? model;
+  // BuildContext? context;
+  farm_profile({Key? key}) : super(key: key);
 
   @override
   State<farm_profile> createState() => _farm_profileState();

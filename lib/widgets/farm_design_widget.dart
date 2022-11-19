@@ -2,6 +2,7 @@ import 'package:agrivillage_sellers_app/mainScreens/farm_profile.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/list_tile/gf_list_tile.dart';
+import 'package:map_launcher/map_launcher.dart';
 
 import '../model/farm.dart';
 
@@ -11,7 +12,7 @@ class farm_design_widget extends StatefulWidget {
   Farm? model;
   BuildContext? context;
 
-  farm_design_widget({this.model, this.context});
+  farm_design_widget({Key? key, this.model, this.context}) : super(key: key);
 
   @override
   State<farm_design_widget> createState() => _farm_design_widgetState();
@@ -21,6 +22,10 @@ class _farm_design_widgetState extends State<farm_design_widget> {
   @override
   final images = [];
   bool initState() {
+    super.initState();
+
+    focusNode = FocusNode();
+    String intent = widget.model!.farmName!;
     images.add(widget.model!.s_img2!);
     images.add(widget.model!.s_img3!);
     images.add(widget.model!.s_img4!);
@@ -28,13 +33,21 @@ class _farm_design_widgetState extends State<farm_design_widget> {
     return true;
   }
 
+  FocusNode? focusNode;
+
+  @override
+  @override
+  void dispose() {
+    // Clean up the focus node when the Form is disposed.
+    focusNode!.dispose();
+    super.dispose();
+  }
+
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (c) => farm_profile(model: widget.model)));
+            context, MaterialPageRoute(builder: (c) => farm_profile()));
       },
       splashColor: Colors.amber,
       child: Padding(
@@ -162,6 +175,38 @@ class _farm_design_widgetState extends State<farm_design_widget> {
               GFListTile(
                 titleText: "Farm Address:  ",
                 subTitleText: widget.model!.farmAddress!,
+              ),
+              Container(
+                width: 400,
+                height: 40,
+                alignment: Alignment.center,
+                child: ElevatedButton.icon(
+                  label: const Text(
+                    "Open location in Map",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  icon: const Icon(
+                    Icons.location_on,
+                    color: Colors.white,
+                  ),
+                  onPressed: () async {
+                    if (await MapLauncher.isMapAvailable(MapType.google) ??
+                        false) {
+                      await MapLauncher.showMarker(
+                        mapType: MapType.google,
+                        coords: Coords(widget.model!.lat!, widget.model!.lng!),
+                        title: widget.model!.farmName.toString(),
+                        description: widget.model!.farmDetails,
+                      );
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
+                ),
               ),
               GFListTile(
                 titleText: "Visiting Hour:",

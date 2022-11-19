@@ -6,6 +6,8 @@ import 'package:agrivillage_sellers_app/widgets/error_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart' as storageRef;
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../global/global.dart';
@@ -23,6 +25,11 @@ class _update_farm_profileState extends State<update_farm_profile> {
   final ImagePicker _picker = ImagePicker();
   List<XFile> selectedImage = [];
 
+  Position? position;
+  List<Placemark>? placeMarks;
+
+  String sellerImageUrl = "";
+  String completeAddress = "";
   XFile? imageXFile;
   TextEditingController farmName = TextEditingController();
   TextEditingController farmAddress = TextEditingController();
@@ -39,7 +46,31 @@ class _update_farm_profileState extends State<update_farm_profile> {
   bool uploading = false;
   bool start = false;
   String uniqueIdName = DateTime.now().millisecondsSinceEpoch.toString();
+
   //FirebaseStorage _storage = FirebaseStorage.instance;
+
+  getCurrentLocation() async {
+    Position newPosition = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.medium,
+    );
+
+    position = newPosition;
+
+    placeMarks = await placemarkFromCoordinates(
+      position!.latitude,
+      position!.longitude,
+    );
+    print("latitude");
+    print(position!.latitude);
+    print("longitude");
+    print(position!.longitude);
+    Placemark pMark = placeMarks![0];
+
+    completeAddress =
+        '${pMark.subThoroughfare} ${pMark.thoroughfare}, ${pMark.subLocality} ${pMark.locality}, ${pMark.subAdministrativeArea}, ${pMark.administrativeArea} ${pMark.postalCode}, ${pMark.country}';
+
+    farmAddress.text = completeAddress;
+  }
 
   defaultScreen() {
     return Scaffold(
@@ -69,8 +100,8 @@ class _update_farm_profileState extends State<update_farm_profile> {
             color: Colors.white,
           ),
           onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (c) => const farm_profile()));
+            Navigator.push(
+                context, MaterialPageRoute(builder: (c) => farm_profile()));
           },
         ),
       ),
@@ -154,8 +185,8 @@ class _update_farm_profileState extends State<update_farm_profile> {
           ),
           onPressed: () {
             clearMenusUploadForm();
-            Navigator.push(context,
-                MaterialPageRoute(builder: (c) => const farm_profile()));
+            Navigator.push(
+                context, MaterialPageRoute(builder: (c) => farm_profile()));
           },
         ),
         actions: [
@@ -215,6 +246,30 @@ class _update_farm_profileState extends State<update_farm_profile> {
                       prefixIcon: Icon(Icons.home),
                       border: OutlineInputBorder(),
                     )),
+              ),
+              Container(
+                width: 400,
+                height: 40,
+                alignment: Alignment.center,
+                child: ElevatedButton.icon(
+                  label: const Text(
+                    "Get my Current Location",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  icon: const Icon(
+                    Icons.location_on,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    getCurrentLocation();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.all(10.0),
@@ -454,7 +509,7 @@ class _update_farm_profileState extends State<update_farm_profile> {
                       onPressed: () {
                         selectImage(5);
                       },
-                      child: const Text('Select Image 5 Files For Slider'),
+                      child: const Text('Select 5 Image Files For Slider'),
                     ),
                   ),
                   Expanded(
@@ -573,6 +628,8 @@ class _update_farm_profileState extends State<update_farm_profile> {
     ref.doc("farmDetails").set({
       "farmName": farmName.text.toString(),
       "farmAddress": farmAddress.text.toString(),
+      "lat": position!.latitude,
+      "lng": position!.longitude,
       "farmDetails": farmDetails.text.toString(),
       "farmFeatures": farmFeatures.text.toString(),
       "farmTiming": farmTiming.text.toString(),
@@ -597,6 +654,8 @@ class _update_farm_profileState extends State<update_farm_profile> {
       itemsRef.doc("farmDetails").set({
         "farmName": farmName.text.toString(),
         "farmAddress": farmAddress.text.toString(),
+        "lat": position!.latitude,
+        "lng": position!.longitude,
         "farmDetails": farmDetails.text.toString(),
         "farmFeatures": farmFeatures.text.toString(),
         "farmTiming": farmTiming.text.toString(),

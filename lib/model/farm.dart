@@ -5,6 +5,8 @@ class Farm {
   String? sellerUID;
   String? farmName;
   String? farmAddress;
+  double? lat;
+  double? lng;
   Timestamp? publishedDate;
   String? farmDetails;
   String? farmFeatures;
@@ -23,6 +25,8 @@ class Farm {
     this.sellerUID,
     this.farmName,
     this.farmAddress,
+    this.lat,
+    this.lng,
     this.publishedDate,
     this.farmDetails,
     this.farmFeatures,
@@ -42,6 +46,8 @@ class Farm {
     sellerUID = json['sellerUID'];
     farmName = json['farmName'];
     farmAddress = json['farmAddress'];
+    lat = json['lat'];
+    lng = json['lng'];
     publishedDate = json['publishedDate'];
     farmDetails = json['farmDetails'];
     farmFeatures = json['farmFeatures'];
@@ -63,6 +69,8 @@ class Farm {
     data['sellerUID'] = sellerUID;
     data['farmName'] = farmName;
     data['farmAddress'] = farmAddress;
+    data['lat'] = lat;
+    data['lng'] = lng;
     data['publishedDate'] = publishedDate;
     data['farmDetails'] = farmDetails;
     data['farmFeatures'] = farmFeatures;
