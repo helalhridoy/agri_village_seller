@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:open_street_map_search_and_pick/open_street_map_search_and_pick.dart';
 
 import '../global/global.dart';
 import '../widgets/progress_bar.dart';
@@ -28,6 +29,7 @@ class _update_farm_profileState extends State<update_farm_profile> {
   Position? position;
   List<Placemark>? placeMarks;
 
+
   String sellerImageUrl = "";
   String completeAddress = "";
   XFile? imageXFile;
@@ -45,6 +47,9 @@ class _update_farm_profileState extends State<update_farm_profile> {
   TextEditingController priceController = TextEditingController();
   bool uploading = false;
   bool start = false;
+  double lat=23.7397;
+  double lng=90.3943;
+  String address="";
   String uniqueIdName = DateTime.now().millisecondsSinceEpoch.toString();
 
   //FirebaseStorage _storage = FirebaseStorage.instance;
@@ -60,6 +65,8 @@ class _update_farm_profileState extends State<update_farm_profile> {
       position!.latitude,
       position!.longitude,
     );
+    lat= position!.latitude;
+    lng=position!.longitude;
     print("latitude");
     print(position!.latitude);
     print("longitude");
@@ -270,6 +277,25 @@ class _update_farm_profileState extends State<update_farm_profile> {
                     ),
                   ),
                 ),
+              ),
+              Container(
+                width: 400,
+                height: 300,
+                alignment: Alignment.center,
+                child: OpenStreetMapSearchAndPick(
+                    center: LatLong(lat, lng),
+                    buttonColor: Colors.blue,
+                    buttonText: 'Set Current Location',
+                    onPicked: (pickedData) {
+                      print(pickedData.latLong.latitude);
+                      print(pickedData.latLong.longitude);
+                      print(pickedData.address);
+
+                      address=pickedData.address;
+                      farmAddress.text = address;
+                      lat=pickedData.latLong.latitude;
+                      lng=pickedData.latLong.longitude;
+                    })
               ),
               Padding(
                 padding: const EdgeInsets.all(10.0),
@@ -628,8 +654,8 @@ class _update_farm_profileState extends State<update_farm_profile> {
     ref.doc("farmDetails").set({
       "farmName": farmName.text.toString(),
       "farmAddress": farmAddress.text.toString(),
-      "lat": position!.latitude,
-      "lng": position!.longitude,
+      "lat": lat,
+      "lng": lng,
       "farmDetails": farmDetails.text.toString(),
       "farmFeatures": farmFeatures.text.toString(),
       "farmTiming": farmTiming.text.toString(),
@@ -654,8 +680,8 @@ class _update_farm_profileState extends State<update_farm_profile> {
       itemsRef.doc("farmDetails").set({
         "farmName": farmName.text.toString(),
         "farmAddress": farmAddress.text.toString(),
-        "lat": position!.latitude,
-        "lng": position!.longitude,
+        "lat": lat,
+        "lng": lng,
         "farmDetails": farmDetails.text.toString(),
         "farmFeatures": farmFeatures.text.toString(),
         "farmTiming": farmTiming.text.toString(),
